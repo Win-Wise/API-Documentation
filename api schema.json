@@ -26,7 +26,7 @@
             },
             "max_wager_count": {
               "type": "integer",
-              "description": "The maximum number of wagers allowed. (default: -1 indicates no limit)",
+              "description": "The maximum number of wagers allowed at this bookmaker. (default: -1 indicates no limit)",
               "default": -1
             },
             "lowest_valid_wager": {
@@ -35,7 +35,7 @@
                 "default": 0.01
             },
             "id": {
-              "type": "integer",
+              "type": ["integer", "number", "string"],
               "description": "The unique identifier of the bookmaker."
             }
           }
@@ -56,7 +56,7 @@
                 "integer",
                 "string"
               ],
-              "description": "The type of bet, represented as an integer or string. See documentation for full list.",
+              "description": "The type of bet, represented as an integer or string. See https://github.com/Win-Wise/API-Documentation for full list.",
               "examples": [
                 0,
                 16,
@@ -66,7 +66,7 @@
             },
             "value": {
               "type": "string",
-              "description": "The specifics of the bet. This must be formatted acording to the 'bet_type' see documentation for more details.",
+              "description": "The specifics of the bet. This must be formatted according to the 'bet_type' see https://github.com/Win-Wise/API-Documentation/blob/4349894f6126aa31c1ab165ca9f29a298ee62641/value_format_table.md for more details.",
               "examples": [
                 "Home",
                 "Draw",
@@ -127,8 +127,18 @@
       },
       "no_draw": {
         "type": "boolean",
-        "description": "Indicates if a draw is not possible. For tournoment games where a team must win",
+        "description": "Indicates if a draw is not possible. For tournament games where one team must win.",
         "default": false
+      },
+      "max_process_time": {
+        "type": "number",
+        "description": "The maximum amount of time (in seconds) the calculator is allowed to take to process.",
+        "default": 29.5
+      },
+      "total_max_wager_count": {
+        "type": "integer",
+        "description": "The maximum number of wagers that the calculator is allowed to recommend.  (default: -1 indicates no limit)",
+        "default": -1
       }
     }
   }
