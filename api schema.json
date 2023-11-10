@@ -139,6 +139,12 @@
         "type": "integer",
         "description": "The maximum number of wagers that the calculator is allowed to recommend.  (default: -1 indicates no limit)",
         "default": -1
+      },
+      "mode": {
+        "type": ["integer", "string"],
+        "enum": [1, "GuaranteedProfit", 2, "MaxProfit"],
+        "description": "1 or 'GuaranteedProfit': Calculator will maximise the guaranteed profit. 2 or 'MaxProfit': Calculator will maximise max profit.",
+        "default": 1
       }
     }
   }
