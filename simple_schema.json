@@ -1,0 +1,105 @@
+{
+	"type": "object",
+	"properties": {
+		"bookmakers": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"commission": {
+						"type": "number",
+						"description": "The commission rate charged by the bookmaker.",
+						"default": 0.0
+					},
+					"wager_limit": {
+						"type": "number",
+						"description": "The maximum amount that can be wagered with this bookmaker. (default: -1 indicates no limit)",
+						"default": -1
+					},
+					"ignore_wager_precision": {
+						"type": "boolean",
+						"description": "Indicates whether to ignore the wager_precision value. For all bets within this bookmaker.",
+						"default": false
+					},
+					"max_wager_count": {
+						"type": "integer",
+						"description": "The maximum number of wagers allowed. (default: -1 indicates no limit)",
+						"default": -1
+					},
+					"id": {
+						"type": "integer",
+						"description": "The unique identifier of the bookmaker."
+					}
+				},
+				"required": ["id"]
+			}
+		},
+		"bets": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"bet_type": {
+						"type": [
+							"integer",
+							"string"
+						],
+						"description": "The type of bet, represented as an integer or string. See documentation for full list.",
+						"examples": [0, 16, "MatchWinner", "Goals_OverUnder"]
+					},
+					"value": {
+						"type": "string",
+						"description": "The specifics of the bet. This must be formatted acording to the 'bet_type' see documentation for more details.",
+						"examples": ["Home", "Draw", "Over 2.5"]
+					},
+					"odds": {
+						"type": "number",
+						"description": "The odds associated with this bet.",
+						"examples": [3.2, 4.44, 5.0]
+					},
+					"bookmaker": {
+						"type": "integer",
+						"description": "The ID of the bookmaker offering this bet.",
+						"default": 0
+					},
+					"lay": {
+						"type": "boolean",
+						"description": "Indicates whether the bet is a 'lay' bet.",
+						"default": false
+					},
+					"volume": {
+						"type": "number",
+						"description": "The volume assisiated with this bet. a.k.a. the maximum bet size. (default: -1 indicates no bet limit)",
+						"default": -1.0,
+						"examples": [1000.25, 5.23, 0.52]
+					},
+					"previous_wager": {
+						"type": "number",
+						"description": "The total amount already wagered on this bet at these odds.",
+						"default": 0.0
+					},
+					"wager": {
+						"type": "number",
+						"description": "The calculated wager to place on this bet. (should only be set by calculator)",
+						"default": 0.0
+					}
+				},
+				"required": [
+					"bet_type",
+					"value",
+					"odds"
+				]
+			}
+		},
+		"wager_limit": {
+			"type": "number",
+			"description": "The maximum amount that can be wagered on this event in total. If no wager limits are defined here or in bookmakers this will deafult to 100 meaning all wager values reprisent a percentage of total stake.",
+			"default": -1
+		},
+		"wager_precision": {
+			"type": "integer",
+			"description": "All calculated wager amounts will be a multiple of this value. e.g. {wager_precision: 10} all calculated wagers will be a multiple of 10.",
+			"default": 0.01
+		}
+	}
+}

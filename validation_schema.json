@@ -1,0 +1,110 @@
+{
+	"type": "object",
+	"properties": {
+		"wager_limit": {
+			"type": "number"
+		},
+		"bets": {
+			"type": "array",
+			"minItems": 2,
+			"uniqueItems": true,
+			"required": [
+				"bet_type",
+				"value",
+				"odds"
+			],
+			"items": {
+				"type": "object",
+				"properties": {
+					"bet_type": {
+						"anyOf": [
+							{
+								"type": "integer",
+								"minimum": 1,
+								"maximum": 16
+							},{
+								"type": "string",
+								"enum": ["MatchWinner", "AsianHandicap", "Goals_OverUnder", "BothTeamsToScore", "ExactScore", "DoubleChance", "Team_Total", "OddEven", "Team_OddEven", "Result_BothTeamsScore", "Result_TotalGoals", "TeamCleanSheet", "Team_WinToNil", "ExactGoalsNumber", "Team_ExactGoalsNumber", "Team_ScoreAGoal"]
+							}
+						]
+					},
+					"value": {"type": "string"},
+					"odds": {"type": "number"},
+					"bookmaker_id": {"type": "integer"},
+					"lay": {"type": "boolean"},
+					"volume": {"type": "integer"},
+					"previous_wager": {"type": "integer"},
+					"wager": {"type": "integer"}
+				},
+				"allOf":[
+					{
+						"if": {"properties": {"bet_type": {"enum": [1, "MatchWinner"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|draw|away)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [2, "AsianHandicap"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|away) ([+-]?\\d+(?:\\.(?:0|25|5|75))?)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [3, "Goals_OverUnder"]}}},
+						"then": {"properties": {"value": {"pattern": "^(over|under) ([+-]?\\d+(?:\\.(?:0|25|5|75))?)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [4, "BothTeamsToScore"]}}},
+						"then": {"properties": {"value": {"pattern": "^(yes|no)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [5, "ExactScore"]}}},
+						"then": {"properties": {"value": {"pattern": "^([0-9]{1,4}):([0-9]{1,4})$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [6, "DoubleChance"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|draw|away)\\/(home|draw|away)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [7, "Team_Total"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|away) (over |under )?([0-9]*)(.5)?$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [8, "OddEven"]}}},
+						"then": {"properties": {"value": {"pattern": "^(odd|even)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [9, "Team_OddEven"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|away) (odd|even)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [10, "Result_BothTeamsScore"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|draw|away)\\/(yes|no)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [11, "Result_TotalGoals"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|draw|away)\\/(over|under) (\\d+(?:\\.(?:0|5))?)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [12, "TeamCleanSheet"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|away) (yes|no)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [13, "Team_WinToNil"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|away) (yes|no)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [14, "ExactGoalsNumber"]}}},
+						"then": {"properties": {"value": {"pattern": "^(over |under )?(\\d+)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [15, "Team_ExactGoalsNumber"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|away) (over |under )?(\\d+)$"}}}
+					},{
+						"if": {"properties": {"bet_type": {"enum": [16, "Team_ScoreAGoal"]}}},
+						"then": {"properties": {"value": {"pattern": "^(home|away) (yes|no)$"}}}
+					}
+				]
+			}
+		},
+		"bookmakers": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"commission": {
+						"type": "number"
+					},
+					"wager_limit": {
+						"type": "integer"
+					},
+					"id": {
+						"type": "integer"
+					}
+				}
+			}
+		}
+	}
+}
